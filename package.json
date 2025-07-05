@@ -89,6 +89,7 @@
     "eslint": "9.29.0",
     "eslint-plugin-vue": "10.2.0",
     "kolorist": "1.8.0",
+    "lint-staged": "^16.1.2",
     "sass": "1.89.2",
     "simple-git-hooks": "2.13.0",
     "tsx": "4.20.3",
