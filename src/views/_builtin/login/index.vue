@@ -232,7 +232,7 @@ function handleThirdPartyLogin(provider: string) {
         <!-- 左侧品牌展示区域 -->
         <div class="hidden w-1/2 px-10 py-10 md:block" :style="{ background: gradientBg }">
           <!-- 装饰性几何图形 -->
-          <div class="absolute inset-0 opacity-10 z-0">
+          <div class="absolute inset-0 z-0 opacity-10">
             <div
               class="absolute left-20 top-20 h-32 w-32 border-2 rounded-full"
               :style="{ borderColor: geometricShapeStyle.borderColor }"

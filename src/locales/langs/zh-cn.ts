@@ -166,13 +166,18 @@ const local: App.I18n.Schema = {
     404: '页面不存在',
     500: '服务器错误',
     'iframe-page': '外链页面',
-    home: '首页'
+    home: '首页',
+    // 临时修复 - 添加缺失的路由键值
+    exception: '异常页面',
+    exception_403: '无权限',
+    exception_404: '页面不存在',
+    exception_500: '服务器错误'
   },
   page: {
     login: {
       common: {
         loginOrRegister: '登录 / 注册',
-        useruamePlaceholder: '请输入用户名',
+        usernamePlaceholder: '请输入用户名',
         phonePlaceholder: '请输入手机号',
         codePlaceholder: '请输入验证码',
         passwordPlaceholder: '请输入密码',
@@ -182,7 +187,7 @@ const local: App.I18n.Schema = {
         // back: '返回',
         validateSuccess: '验证成功',
         loginSuccess: '登录成功',
-        welcomeBack: '欢迎回来，{useruame} ！',
+        welcomeBack: '欢迎回来，{username} ！',
         login: '登录'
       },
       pwdLogin: {
@@ -219,7 +224,7 @@ const local: App.I18n.Schema = {
     home: {
       branchDesc:
         '为了方便大家开发和更新合并，我们对main分支的代码进行了精简，只保留了首页菜单，其余内容已移至example分支进行维护。预览地址显示的内容即为example分支的内容。',
-      greeting: '早安，{useruame}, 今天又是充满活力的一天!',
+      greeting: '早安，{username}, 今天又是充满活力的一天!',
       weatherDesc: '今日多云转晴，20℃ - 25℃!',
       projectCount: '项目数',
       todo: '待办',
@@ -248,18 +253,22 @@ const local: App.I18n.Schema = {
   },
   form: {
     required: '不能为空',
-    useruame: {
-      required: '请输入用户名',
-      invalid: '用户名格式不正确'
+    login: {
+      username: {
+        required: '请输入用户名',
+        invalid: '用户名格式不正确，5-20位字符，包含大小写字母、数字、下划线'
+      },
+      pwd: {
+        required: '请输入密码',
+        invalid: '密码格式不正确，6-25位字符，大小写字母、数字、特殊字符~!#$%^&_-至少各包含1个'
+      }
     },
+
     phone: {
       required: '请输入手机号',
       invalid: '手机号格式不正确'
     },
-    pwd: {
-      required: '请输入密码',
-      invalid: '密码格式不正确，6-18位字符，包含字母、数字、下划线'
-    },
+
     confirmPwd: {
       required: '请输入确认密码',
       invalid: '两次输入密码不一致'

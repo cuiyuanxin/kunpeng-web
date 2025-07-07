@@ -427,7 +427,7 @@ declare namespace App {
         login: {
           common: {
             loginOrRegister: string;
-            useruamePlaceholder: string;
+            usernamePlaceholder: string;
             phonePlaceholder: string;
             codePlaceholder: string;
             passwordPlaceholder: string;
@@ -502,9 +502,13 @@ declare namespace App {
       };
       form: {
         required: string;
-        useruame: FormMsg;
+        login: {
+          username: FormMsg;
+          pwd: FormMsg;
+        };
+
         phone: FormMsg;
-        pwd: FormMsg;
+
         confirmPwd: FormMsg;
         code: FormMsg;
         email: FormMsg;

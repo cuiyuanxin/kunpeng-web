@@ -1,46 +1,40 @@
-import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import type { AlovaGenerics, AlovaOptions, AlovaRequestAdapter, Method, ResponseCompleteHandler } from 'alova';
 
-export type ContentType =
-  | 'text/html'
-  | 'text/plain'
-  | 'multipart/form-data'
-  | 'application/json'
-  | 'application/x-www-form-urlencoded'
-  | 'application/octet-stream';
+export type CustomAlovaConfig<AG extends AlovaGenerics> = Omit<
+  AlovaOptions<AG>,
+  'statesHook' | 'beforeRequest' | 'responded' | 'requestAdapter'
+> & {
+  /** request adapter. all request of alova will be sent by it. */
+  requestAdapter?: AlovaRequestAdapter<AG['RequestConfig'], AG['Response'], AG['ResponseHeader']>;
+};
 
-export interface RequestOption<ResponseData = any> {
+export interface RequestOptions<AG extends AlovaGenerics> {
   /**
    * The hook before request
    *
    * For example: You can add header token in this hook
    *
-   * @param config Axios config
+   * @param method alova Method Instance
    */
-  onRequest: (config: InternalAxiosRequestConfig) => InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig>;
+  onRequest?: AlovaOptions<AG>['beforeRequest'];
   /**
    * The hook to check backend response is success or not
    *
-   * @param response Axios response
+   * @param response alova response
    */
-  isBackendSuccess: (response: AxiosResponse<ResponseData>) => boolean;
-  /**
-   * The hook after backend request fail
-   *
-   * For example: You can handle the expired token in this hook
-   *
-   * @param response Axios response
-   * @param instance Axios instance
-   */
-  onBackendFail: (
-    response: AxiosResponse<ResponseData>,
-    instance: AxiosInstance
-  ) => Promise<AxiosResponse | null> | Promise<void>;
-  /**
-   * transform backend response when the responseType is json
-   *
-   * @param response Axios response
-   */
-  transformBackendResponse(response: AxiosResponse<ResponseData>): any | Promise<any>;
+  isBackendSuccess: (response: AG['Response']) => Promise<boolean>;
+
+  /** The config to refresh token */
+  tokenRefresher?: {
+    /** detect the token is expired */
+    isExpired(response: AG['Response'], Method: Method<AG>): Promise<boolean> | boolean;
+    /** refresh token handler */
+    handler(response: AG['Response'], Method: Method<AG>): Promise<void>;
+  };
+
+  /** The hook after backend request complete */
+  onComplete?: ResponseCompleteHandler<AG>;
+
   /**
    * The hook to handle error
    *
@@ -48,68 +42,11 @@ export interface RequestOption<ResponseData = any> {
    *
    * @param error
    */
-  onError: (error: AxiosError<ResponseData>) => void | Promise<void>;
-}
-
-interface ResponseMap {
-  blob: Blob;
-  text: string;
-  arrayBuffer: ArrayBuffer;
-  stream: ReadableStream<Uint8Array>;
-  document: Document;
-}
-export type ResponseType = keyof ResponseMap | 'json';
-
-export type MappedType<R extends ResponseType, JsonType = any> = R extends keyof ResponseMap
-  ? ResponseMap[R]
-  : JsonType;
-
-export type CustomAxiosRequestConfig<R extends ResponseType = 'json'> = Omit<AxiosRequestConfig, 'responseType'> & {
-  responseType?: R;
-};
-
-export interface RequestInstanceCommon<T> {
+  onError?: (error: any, response: AG['Response'] | null, methodInstance: Method<AG>) => any | Promise<any>;
   /**
-   * cancel the request by request id
+   * transform backend response when the responseType is json
    *
-   * if the request provide abort controller sign from config, it will not collect in the abort controller map
-   *
-   * @param requestId
+   * @param response alova response
    */
-  cancelRequest: (requestId: string) => void;
-  /**
-   * cancel all request
-   *
-   * if the request provide abort controller sign from config, it will not collect in the abort controller map
-   */
-  cancelAllRequest: () => void;
-  /** you can set custom state in the request instance */
-  state: T;
-}
-
-/** The request instance */
-export interface RequestInstance<S = Record<string, unknown>> extends RequestInstanceCommon<S> {
-  <T = any, R extends ResponseType = 'json'>(config: CustomAxiosRequestConfig<R>): Promise<MappedType<R, T>>;
-}
-
-export type FlatResponseSuccessData<T = any, ResponseData = any> = {
-  data: T;
-  error: null;
-  response: AxiosResponse<ResponseData>;
-};
-
-export type FlatResponseFailData<ResponseData = any> = {
-  data: null;
-  error: AxiosError<ResponseData>;
-  response: AxiosResponse<ResponseData>;
-};
-
-export type FlatResponseData<T = any, ResponseData = any> =
-  | FlatResponseSuccessData<T, ResponseData>
-  | FlatResponseFailData<ResponseData>;
-
-export interface FlatRequestInstance<S = Record<string, unknown>, ResponseData = any> extends RequestInstanceCommon<S> {
-  <T = any, R extends ResponseType = 'json'>(
-    config: CustomAxiosRequestConfig<R>
-  ): Promise<FlatResponseData<MappedType<R, T>, ResponseData>>;
+  transformBackendResponse: (response: AG['Response']) => any;
 }

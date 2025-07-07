@@ -166,13 +166,18 @@ const local: App.I18n.Schema = {
     404: 'Page Not Found',
     500: 'Server Error',
     'iframe-page': 'Iframe',
-    home: 'Home'
+    home: 'Home',
+    // 临时修复 - 添加缺失的路由键值
+    exception: 'Exception',
+    exception_403: 'No Permission',
+    exception_404: 'Page Not Found',
+    exception_500: 'Server Error'
   },
   page: {
     login: {
       common: {
         loginOrRegister: 'Login / Register',
-        useruamePlaceholder: 'Please enter user name',
+        usernamePlaceholder: 'Please enter user name',
         phonePlaceholder: 'Please enter phone number',
         codePlaceholder: 'Please enter verification code',
         passwordPlaceholder: 'Please enter password',
@@ -182,7 +187,7 @@ const local: App.I18n.Schema = {
         // back: 'Back',
         validateSuccess: 'Verification passed',
         loginSuccess: 'Login successfully',
-        welcomeBack: 'Welcome back, {useruame} !',
+        welcomeBack: 'Welcome back, {username} !',
         login: 'Login'
       },
       pwdLogin: {
@@ -219,7 +224,7 @@ const local: App.I18n.Schema = {
     home: {
       branchDesc:
         'For the convenience of everyone in developing and updating the merge, we have streamlined the code of the main branch, only retaining the homepage menu, and the rest of the content has been moved to the example branch for maintenance. The preview address displays the content of the example branch.',
-      greeting: 'Good morning, {useruame}, today is another day full of vitality!',
+      greeting: 'Good morning, {username}, today is another day full of vitality!',
       weatherDesc: 'Today is cloudy to clear, 20℃ - 25℃!',
       projectCount: 'Project Count',
       todo: 'Todo',
@@ -248,18 +253,24 @@ const local: App.I18n.Schema = {
   },
   form: {
     required: 'Cannot be empty',
-    useruame: {
-      required: 'Please enter user name',
-      invalid: 'User name format is incorrect'
+    login: {
+      username: {
+        required: 'Please enter username',
+        invalid:
+          'Invalid username format. 5-20 characters, including uppercase and lowercase letters, numbers, and underscores'
+      },
+      pwd: {
+        required: 'Please enter password',
+        invalid:
+          'Invalid password format. 6-25 characters, must contain at least one uppercase letter, lowercase letter, number, and special character ~!#$%^&_-'
+      }
     },
+
     phone: {
       required: 'Please enter phone number',
       invalid: 'Phone number format is incorrect'
     },
-    pwd: {
-      required: 'Please enter password',
-      invalid: '6-18 characters, including letters, numbers, and underscores'
-    },
+
     confirmPwd: {
       required: 'Please enter password again',
       invalid: 'The two passwords are inconsistent'

@@ -33,3 +33,16 @@ package-lock.json
 yarn.lock
 
 .VSCodeCounter
+
+# Scripts directory
+# Keep script files but ignore temporary files and logs
+scripts/**/*.log
+scripts/**/*.tmp
+scripts/**/temp/
+scripts/**/cache/
+# Allow all script files to be tracked
+!scripts/**/*.sh
+!scripts/**/*.bat
+!scripts/**/*.ps1
+!scripts/**/*.md
+!scripts/**/.gitkeep
