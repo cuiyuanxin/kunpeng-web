@@ -232,7 +232,7 @@ function handleThirdPartyLogin(provider: string) {
         <!-- 左侧品牌展示区域 -->
         <div class="hidden w-1/2 px-10 py-10 md:block" :style="{ background: gradientBg }">
           <!-- 装饰性几何图形 -->
-          <div class="absolute inset-0 opacity-10">
+          <div class="absolute inset-0 opacity-10 z-0">
             <div
               class="absolute left-20 top-20 h-32 w-32 border-2 rounded-full"
               :style="{ borderColor: geometricShapeStyle.borderColor }"
@@ -264,7 +264,7 @@ function handleThirdPartyLogin(provider: string) {
         </div>
 
         <!-- 右侧登录区域 -->
-        <div class="w-full px-5 py-10 md:w-1/2 md:px-10" :style="loginAreaStyle">
+        <div class="relative z-10 w-full px-5 py-10 md:w-1/2 md:px-10" :style="loginAreaStyle">
           <!-- 移动端Logo -->
           <div class="mb-8 text-center md:hidden">
             <SystemLogo class="mx-auto mb-4 text-6xl text-primary" />
@@ -287,7 +287,7 @@ function handleThirdPartyLogin(provider: string) {
                 v-for="(item, key) in moduleMap"
                 :key="key"
                 :name="item.value"
-                @click="toggleLoginModule(item.value as 'pwd-login' | 'code-login')"
+                @click="toggleLoginModule(item.value as 'pwd-login' | 'code-login' as 'pwd-login' | 'code-login')"
               >
                 {{ $t(item.label) }}
               </NTab>
