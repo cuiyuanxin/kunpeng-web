@@ -7,9 +7,9 @@ import { getAuthorization, handleRefreshToken, showErrorMsg } from './shared';
 import type { RequestInstanceState } from './type';
 
 const isHttpProxy = import.meta.env.DEV && import.meta.env.VITE_HTTP_PROXY === 'Y';
-const { baseURL, otherBaseURL } = getServiceBaseURL(import.meta.env, isHttpProxy);
+const { baseURL, otherBaseURL: _otherBaseURL } = getServiceBaseURL(import.meta.env, isHttpProxy);
 
-console.log(baseURL, otherBaseURL);
+// console.log(baseURL, _otherBaseURL);
 
 const state: RequestInstanceState = {
   errMsgStack: []

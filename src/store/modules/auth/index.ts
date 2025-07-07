@@ -102,12 +102,15 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
    * @param params.rememberMe Whether to remember password
    * @param [redirect=true] Whether to redirect after login. Default is `true`
    */
-  async function login(params: { username: string; password: string; rememberMe?: boolean }, redirect: boolean = true) {
+  async function login(
+    _params: { username: string; password: string; rememberMe?: boolean },
+    _redirect: boolean = true
+  ) {
     startLoading();
 
     // const { data: loginToken, error } = await fetchLogin(params.username, params.password, params.rememberMe || false);
 
-    console.log(params, redirect);
+    // console.log(_params, _redirect);
 
     // if (!error) {
     //   const pass = await loginByToken(loginToken);
